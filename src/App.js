@@ -1,9 +1,12 @@
 import React from 'react';
 import './App.css'
+import { connect } from 'react-redux'
+import ModelForm from './components/ModelForm'
 const redux = require('redux')
 
 
 function App() {
+    
     const data= [
         {
             name: "Ivel Z3",
@@ -32,15 +35,39 @@ function App() {
     ] 
     
     console.log('app',data)
-
+    
     const initialState = []
 
+    
+
+    // updateSelection = event => {
+    //     this.setState( {value: event.target.value} )
+    // }
+
+    // this.updateSelection = this.updateSelection.bind(this)
+
+    
+
+    // const action = {
+    //     type: "ADD_MODEL",
+    //     payload: data
+    // }
+    // store.dispatch(action)
+
+    function addModel(data) {
+        return {
+            type: 'ADD_MODEL',
+            payload: data
+        }
+    }
+    // dispatch(addModel(data))
+    
     const reducer = (state = initialState, action = {}) => {
         switch (action.type) {
         case 'ADD_MODEL':
           return [
             ...state,
-            { ...action.payload }
+             ...action.payload 
           ]
         default:
             return state
@@ -49,14 +76,7 @@ function App() {
 
     const store = redux.createStore(reducer)
     store.subscribe(()=>console.log('Next state:', store.getState()))
-
-    const action = {
-        type: "ADD_MODEL",
-        payload: data
-    }
-    store.dispatch(action)
-
-    
+    store.dispatch(addModel(data))
 
     return (
     <div className="App">
@@ -67,24 +87,34 @@ function App() {
             <option key={obj.name} data={obj}>{obj.name}({obj.year})</option>)
           }
           </select>
-          <button>Add</button>
+          
+          <ModelForm />
+          
     </div>
     )
+}
+
+    
+
+
+
+const mapStateToProps = data => {
+    return {
+      models: data.models
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+      onClick: e => dispatch(e)
+    }
   }
-  
-// class ModelForm extends React.Component {
-//     constructor(props) {
-//        super(props);
-//        this.updateSelection = this.updateSelection.bind(this);
-//     }
 
-//     updateSelection = e => {
-//         this.setState({ value: e.target.value });
-//     }
-// }
+export default connect(
+    mapStateToProps, 
+    mapDispatchToProps)(
+    App)
 
-export default App;
 
- 
 {/* <AddButton dispatch={this.props.dispatch}/> */}
         
