@@ -1,8 +1,10 @@
 import React from 'react';
 import './App.css'
 import { connect } from 'react-redux'
-import ModelForm from './components/ModelForm'
+import ModelDetails from './components/ModelDetails'
 const redux = require('redux')
+
+
 
 
 function App() {
@@ -36,23 +38,18 @@ function App() {
     
     console.log('app',data)
     
+    
     const initialState = []
 
     
 
     // updateSelection = event => {
-    //     this.setState( {value: event.target.value} )
+    //     this.setState({value: event.target.value})
     // }
 
     // this.updateSelection = this.updateSelection.bind(this)
 
     
-
-    // const action = {
-    //     type: "ADD_MODEL",
-    //     payload: data
-    // }
-    // store.dispatch(action)
 
     function addModel(data) {
         return {
@@ -74,13 +71,17 @@ function App() {
         }
     }
 
+
     const store = redux.createStore(reducer)
     store.subscribe(()=>console.log('Next state:', store.getState()))
     store.dispatch(addModel(data))
 
+
+    
     return (
     <div className="App">
           <h1>Home Computer Model</h1>
+          
           <select>
           {
             data.map(obj => 
@@ -88,25 +89,26 @@ function App() {
           }
           </select>
           
-          <ModelForm />
-          
+          {
+            data.map(
+                model => 
+                <ModelDetails key={data.name}/>
+            )
+          }
     </div>
     )
 }
 
-    
 
-
-
-const mapStateToProps = data => {
+const mapStateToProps = state => {
     return {
-      models: data.models
+      models: state
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-      onClick: e => dispatch(e)
+      addModel: () => dispatch()
     }
   }
 

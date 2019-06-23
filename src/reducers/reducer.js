@@ -1,4 +1,4 @@
-import { ADD }  from '../actions/actions'
+import { ADD_MODEL }  from '../actions/actions'
 
 const data= [
    {
@@ -27,11 +27,14 @@ const data= [
    }
 ]
 
+
 const reducer = (state = data, action={}) => {
    console.log('data', data) 
    switch (action.type) {
-        case ADD:
-           return [...state, {...action.payload}]
+        case 'ADD_MODEL':
+            return [
+               ...state, ...action.payload
+            ]
     default:
       return state
    }
