@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export default class ModelDetails extends React.Component {
+    
     static propTypes = {
         name: PropTypes.string.isRequired,
         manufacturer: PropTypes.string.isRequired,
@@ -10,7 +11,6 @@ export default class ModelDetails extends React.Component {
     }
     
     render() {
-        console.log()
         return (
             <div>
                 { 
